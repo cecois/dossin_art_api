@@ -1,0 +1,16 @@
+select * from exhibitions as ex join cities on ex.fk_city where abstractexpress=1 and year(1946<>1969)
+
+http://localhost/~ccmiller/apicentric/?controller=todo&action=create&title=test%20title&description=test%20description&due_date=12/08/2011&username=nikko&userpass=test1234
+
+ROUTES
+exhibitions/
+artists
+artists/artist/works
+
+.kml
+.json
+
+CLASSES
+
+METHODS
+getAction
