@@ -57,10 +57,13 @@ require_once 'routes/dispatch.php';
 require_once 'routes/exhibitions.php';
 require_once 'routes/artists.php';
 require_once 'routes/dbfields.php';
+require_once 'routes/works.php';
+
 require_once 'lib/db.php';
 
 $app->get('/exhibitions/:outform','getExhibitions');
 $app->get('/artists/:outform','getArtists');
+$app->get('/artists/:artistid/works/:outform','getArtistWorks');
 $app->get('/dbfields/:outform','getFields');
  
  
