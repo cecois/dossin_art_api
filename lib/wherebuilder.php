@@ -2,7 +2,8 @@
 function buildWhere($paramarray) {
     $whereArr = array();
     // to prevent injection during what we'll do next, we need to limit valid keys
-    $acceptedIncomingVars = array('exhib_number', 'year_start', 'year_end', 'realism', 'surrealism', 'abstractexpress', 'postexpress', 'neodada', 'popart', 'minimal', 'conceptualart', 'ismuseum', 'onlyus', 'exhib_from_us','artistid','polylimit');
+    $acceptedIncomingVars = array('exhib_number', 'year_start', 'year_end', 'realism', 'surrealism', 'abstractexpress', 'postexpress', 'neodada', 'popart', 'minimal', 'conceptualart', 'ismuseum', 'onlyus', 'exhib_from_us','artistid','polylimit','isdrip','isguggen','workid');
+
     // loop through request as array
     foreach ($paramarray as $key => $value) {
         // lowercase it
@@ -13,6 +14,7 @@ function buildWhere($paramarray) {
             $$key = $value;
         }
     }
+
     if (isset($artistid)){
     array_push($whereArr,"artists.id=" . $artistid);
         }
@@ -47,6 +49,15 @@ function buildWhere($paramarray) {
     if (isset($ismuseum)) {
         array_push($whereArr, "ismuseum=" . $ismuseum);
     }
+    if (isset($isdrip)) {
+        array_push($whereArr, "isdrip=" . $isdrip);
+    }
+    if (isset($isguggen)) {
+        array_push($whereArr, "isguggen=" . $isguggen);
+    }
+    if (isset($workid)) {
+        array_push($whereArr, "works.id=" . $workid);
+    }    
     if (isset($year_start) && isset($year_end)) {
         array_push($whereArr, "(exhib_year>=" . $year_start . " AND exhib_year<=" . $year_end . ")");
     } elseif (isset($year_start)) {

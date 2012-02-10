@@ -40,7 +40,7 @@ function getExhibitions($outform) {
         $sql.= " as the_geom from exhibitions as ex join exhibition_spaces on ex.fk_exhibition_spaces_id=exhibition_spaces.id join cities on exhibition_spaces.fk_cities_id=cities.id ";
         //get all of the parameters in the POST/GET request
         $params = $_REQUEST;
-        $joinclause = buildJoin($params);
+        $joinclause = buildJoinForExhibitions($params);
         $whereclause = buildWhere($params);
         $sql.= $joinclause;
         $sql.= $whereclause;

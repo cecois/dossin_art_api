@@ -6,9 +6,20 @@ function getArtistWorks($artistid,$outform) {
     include_once 'models/work.php';
     // include other stuff, too
     include_once 'lib/wherebuilder.php';
+        include_once 'lib/joinbuilder.php';
+
     $parserpath = 'models/' . $outform . '.php';
     
     switch ($outform) {
+
+                case 'geojson':
+            $sql_st_transform = "st_asgeojson(st_transform(the_geom,4326))";
+            break;
+
+        case 'kml':
+            $sql_st_transform = "ST_AsKML(st_transform(the_geom,4326))";
+            break;
+
         case 'json':
             break;
 
@@ -27,8 +38,28 @@ function getArtistWorks($artistid,$outform) {
         // set the concatenated output parser
         $outparser = 'pg2' . strtoupper($outform);
         // here a stub of sql to be enrichened by filter params
-        $sql = "select * from works w where w.fk_artists_id=".$artistid;
 
+$sql ="select works.id as work_id,works.name as work_name,exhib_number,exhib_name,exhib_year,realism,surrealism,abstractexpress,postexpress,neodada,popart,minimal,conceptualart,ismuseum,onlyus,exhib_from_us,
+sp.name as exhib_space_name,isguggen,";
+
+ if (!isset($sql_st_transform)) {
+            $sql_st_transform = "ST_AsText(st_transform(the_geom,4326))";
+        }
+        $sql.= $sql_st_transform;
+
+$sql.=' as the_geom,works."year" as work_year from exhibitions_has_works ew ';
+
+        $params = $_REQUEST; 
+        // in this case works is a subroute of artist, so we already have an id
+        $params["artistid"] = $artistid;
+        $joinclause = buildJoinForWorks($params);
+        $whereclause = buildWhere($params);        
+        $sql.= $joinclause;
+        $sql.= $whereclause;
+
+// echo $sql;die();
+
+        // $sql.= " and w.fk_artists_id=".$artistid;
         //execute the action
         $result['data'] = getWork($sql);
         $result['success'] = true;
