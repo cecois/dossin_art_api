@@ -95,7 +95,18 @@
 
    <aside class="group2">
    <h3>Latest news</h3>
-   
+
+   <article class="holder_news">
+   <h4>GUI demo
+      <span>2012.02.12</span></h4>
+   <p>see <a href="geodev.lib.purdue.edu/dossin/demo/">here</a> for a quick peek at some data in action</p>
+   </article> 
+
+   <article class="holder_news">
+   <h4>works added to individual artists route
+      <span>2012.02.12</span></h4>
+   <p>access to individual works added</p>
+   </article>   
    <article class="holder_news">
    <h4>support for spatial added
       <span>2012.01.27</span></h4>
