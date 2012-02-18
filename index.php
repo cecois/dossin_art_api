@@ -41,8 +41,9 @@ $app = new Slim();
  */
 
 function debugMe(){
-//header("Content-Type: application/xml");
-//$app->response()->header('Content-Type', 'application/xml');
+// header("Content-Type: application/xml");
+// $app->response()->header('Content-Type', 'application/xml');
+echo "debugged?";
 }
 
 function setHTML(){
@@ -69,7 +70,8 @@ $app->get('/dbfields/:outform','getFields');
  
 //GET route
 //$app->get('/', 'defaultFunction');
-$app->get('/', 'describeAPI');
+// $app->get('/', 'describeAPI');
+$app->get('/','debugMe');
 
 
 /**
