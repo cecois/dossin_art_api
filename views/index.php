@@ -96,6 +96,12 @@
    <aside class="group2">
    <h3>Latest news</h3>
 
+      <article class="holder_news">
+   <h4>limit=x param added
+      <span>2012.02.28</span></h4>
+   <p>all routes but artists support arbitrary limit=x parameter</p>
+   </article> 
+
    <article class="holder_news">
    <h4>GUI demo
       <span>2012.02.12</span></h4>

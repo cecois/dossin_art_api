@@ -70,8 +70,8 @@ $app->get('/dbfields/:outform','getFields');
  
 //GET route
 //$app->get('/', 'defaultFunction');
-// $app->get('/', 'describeAPI');
-$app->get('/','debugMe');
+$app->get('/', 'describeAPI');
+// $app->get('/','debugMe');
 
 
 /**

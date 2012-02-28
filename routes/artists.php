@@ -6,6 +6,7 @@ function getArtists($outform) {
     include_once 'models/artist.php';
     // include other stuff, too
     include_once 'lib/wherebuilder.php';
+    include_once 'lib/limitbuilder.php';
     $parserpath = 'models/' . $outform . '.php';
     
     switch ($outform) {

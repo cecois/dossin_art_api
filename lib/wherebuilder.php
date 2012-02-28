@@ -21,7 +21,6 @@ function buildWhere($paramarray) {
     if (isset($exhib_number)) {
         array_push($whereArr, "exhib_number=" . $exhib_number);
     }
-    
     if (isset($neodada)) {
         array_push($whereArr, "neodada=" . $neodada);
     }
@@ -57,7 +56,7 @@ function buildWhere($paramarray) {
     }
     if (isset($workid)) {
         array_push($whereArr, "works.id=" . $workid);
-    }    
+    }
     if (isset($year_start) && isset($year_end)) {
         array_push($whereArr, "(exhib_year>=" . $year_start . " AND exhib_year<=" . $year_end . ")");
     } elseif (isset($year_start)) {
@@ -70,6 +69,7 @@ function buildWhere($paramarray) {
     $withinclause = "ST_Within(st_geomfromtext(the_geom,4326), ".$withinpoly.")";
     array_push($whereArr,$withinclause);
     }
+    
     return concatWhere($whereArr);
 } // end buildWhere
 // function checkOr($value){

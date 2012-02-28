@@ -7,6 +7,8 @@ function getExhibitions($outform) {
     // include other stuff, too
     include_once 'lib/wherebuilder.php';
     include_once 'lib/joinbuilder.php';
+    include_once 'lib/limitbuilder.php';
+    
     $parserpath = 'models/' . $outform . '.php';
     
     switch ($outform) {
@@ -42,8 +44,10 @@ function getExhibitions($outform) {
         $params = $_REQUEST;
         $joinclause = buildJoinForExhibitions($params);
         $whereclause = buildWhere($params);
+        $limitclause = buildLimit($params);
         $sql.= $joinclause;
         $sql.= $whereclause;
+        $sql.=$limitclause;
         // }
         //execute the action
         $result['data'] = getExhibition($sql);
