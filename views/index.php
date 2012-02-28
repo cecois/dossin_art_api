@@ -96,6 +96,12 @@
    <aside class="group2">
    <h3>Latest news</h3>
 
+<article class="holder_news">
+   <h4>country attr added
+      <span>2012.02.28</span></h4>
+   <p>exhibitions route now returns country parent of city</p>
+   </article> 
+
       <article class="holder_news">
    <h4>limit=x param added
       <span>2012.02.28</span></h4>
@@ -105,7 +111,7 @@
    <article class="holder_news">
    <h4>GUI demo
       <span>2012.02.12</span></h4>
-   <p>see <a href="geodev.lib.purdue.edu/dossin/demo/">here</a> for a quick peek at some data in action</p>
+   <p>see <a href="http://geodev.lib.purdue.edu/dossin/demo/">here</a> for a quick peek at some data in action</p>
    </article> 
 
    <article class="holder_news">

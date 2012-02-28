@@ -34,23 +34,27 @@ function getExhibitions($outform) {
         // set the concatenated output parser
         $outparser = 'pg2' . strtoupper($outform);
         // here a stub of sql to be enrichened by filter params
-        $sql = "SELECT exhib_number,exhib_name,exhib_year,realism,surrealism,abstractexpress,postexpress,neodada,popart,minimal,conceptualart,ismuseum,onlyus,exhib_from_us,";
+        $sql = "SELECT exhib_number,exhib_name,exhib_year,realism,surrealism,abstractexpress,postexpress,neodada,popart,minimal,conceptualart,ismuseum,onlyus,exhib_from_us,countries.name as country,";
         if (!isset($sql_st_transform)) {
             $sql_st_transform = "ST_AsText(st_transform(the_geom,4326))";
         }
         $sql.= $sql_st_transform;
-        $sql.= " as the_geom from exhibitions as ex join exhibition_spaces on ex.fk_exhibition_spaces_id=exhibition_spaces.id join cities on exhibition_spaces.fk_cities_id=cities.id ";
+        $sql.= " as the_geom from exhibitions as ex join exhibition_spaces on ex.fk_exhibition_spaces_id=exhibition_spaces.id join cities on exhibition_spaces.fk_cities_id=cities.id join countries on cities.fk_countries_id=countries.id ";
         //get all of the parameters in the POST/GET request
         $params = $_REQUEST;
+
+
         $joinclause = buildJoinForExhibitions($params);
         $whereclause = buildWhere($params);
         $limitclause = buildLimit($params);
+
         $sql.= $joinclause;
         $sql.= $whereclause;
         $sql.=$limitclause;
         // }
         //execute the action
         $result['data'] = getExhibition($sql);
+        
         $result['success'] = true;
     }
     catch(Exception $e) {
@@ -60,6 +64,7 @@ function getExhibitions($outform) {
         $result['errormsg'] = $e->getMessage();
     }
     // now go format that stuff
+    
     echo $outparser($sql,$result['data']);
     exit();
 }

@@ -10,5 +10,7 @@ if ($db){
 	}
     /*** close the database connection ***/
     $db = null;
-    }
+    //}
+
+}
    ?>
