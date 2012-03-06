@@ -50,6 +50,12 @@ function setHTML(){
 //header("Content-Type: application/xml");
 /* $app->response()->header('Content-Type', 'application/xml'); */
 }
+
+
+//DENNIS'S ADDITIONS
+//require_once 'routes/routes.php';
+//require_once 'lib/db.php';
+
  
 require_once 'routes/describeapi.php';
 require_once 'routes/dispatch.php';
@@ -62,10 +68,39 @@ require_once 'routes/works.php';
 
 require_once 'lib/db.php';
 
+
+
 $app->get('/exhibitions/:outform','getExhibitions');
 $app->get('/artists/:outform','getArtists');
 $app->get('/artists/:artistid/works/:outform','getArtistWorks');
 $app->get('/dbfields/:outform','getFields');
+
+
+//DENNIS'S ADDITIONS
+ // Routes
+ //  Artists
+ //$app->get('/artists/:outform', 'getArtists');
+	//$app->get('/artistPut/:artist/:outform', 'putArtist');
+	
+	//  Exhibitions
+	//$app->get('/exhibitions/:outform','getExhibitions');
+
+	//  Works
+	//$app->get('/works/:outform','getWorks');
+
+	//  Exhibition Spaces
+	//$app->get('/spaces/:outform','getExhibitionSpaces');
+
+	//  Cities
+	//$app->get('/cities/:outform','getCities');
+
+	//  Countries
+	//$app->get('/countries/:outform', 'getCountries');
+
+	//  Fields
+	//$app->get('/dbfields/:outform','getFields');
+ 
+ 
  
  
 //GET route
