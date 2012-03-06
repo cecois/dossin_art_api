@@ -53,52 +53,51 @@ function setHTML(){
 
 
 //DENNIS'S ADDITIONS
-//require_once 'routes/routes.php';
-//require_once 'lib/db.php';
+require_once 'routes/routes.php';
+require_once 'lib/db.php';
 
  
 require_once 'routes/describeapi.php';
 require_once 'routes/dispatch.php';
 // require_once 'routes/artists.php';
 // require_once 'routes/artist/works.php';
-require_once 'routes/exhibitions.php';
-require_once 'routes/artists.php';
-require_once 'routes/dbfields.php';
-require_once 'routes/works.php';
-
-require_once 'lib/db.php';
+//require_once 'routes/exhibitions.php';
+//require_once 'routes/artists.php';
+//require_once 'routes/dbfields.php';
+//require_once 'routes/works.php';
 
 
 
-$app->get('/exhibitions/:outform','getExhibitions');
-$app->get('/artists/:outform','getArtists');
+
+//$app->get('/exhibitions/:outform','getExhibitions');
+//$app->get('/artists/:outform','getArtists');
 $app->get('/artists/:artistid/works/:outform','getArtistWorks');
 $app->get('/dbfields/:outform','getFields');
 
 
 //DENNIS'S ADDITIONS
  // Routes
- //  Artists
- //$app->get('/artists/:outform', 'getArtists');
-	//$app->get('/artistPut/:artist/:outform', 'putArtist');
+	//  Artists
+	$app->get('/artists/:outform', 'getArtists');
+	$app->get('/artistPut/:artist/:outform', 'putArtist');
 	
 	//  Exhibitions
-	//$app->get('/exhibitions/:outform','getExhibitions');
+	$app->get('/exhibitions/:outform','getExhibitions');
 
 	//  Works
-	//$app->get('/works/:outform','getWorks');
+	$app->get('/works/:outform','getWorks');
 
 	//  Exhibition Spaces
-	//$app->get('/spaces/:outform','getExhibitionSpaces');
+	$app->get('/spaces/:outform','getExhibitionSpaces');
 
 	//  Cities
-	//$app->get('/cities/:outform','getCities');
+	$app->get('/cities/:outform','getCities');
 
 	//  Countries
-	//$app->get('/countries/:outform', 'getCountries');
+	$app->get('/countries/:outform', 'getCountries');
 
 	//  Fields
-	//$app->get('/dbfields/:outform','getFields');
+	$app->get('/dbfields/:outform','getFields');
  
  
  
