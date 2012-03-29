@@ -40,7 +40,7 @@
 			
 		}
 		$fieldsToOutput = array("id", "exhib_name");
-		produceOutput($outform, $sql, $fieldsToOutput);
+		produceOutput($outform, $sql, $fieldsToOutput, $params);
 	}
 	
 	/*
@@ -98,7 +98,7 @@
 	}
 	
 	
-	function produceOutput($outform, $sql, $fieldsToOutput)
+	function produceOutput($outform, $sql, $fieldsToOutput, $params)
 	{
 		// Global app variable to set a proper header for actual kml clients later
 		global $app;
@@ -132,7 +132,7 @@
 		}
 		
 		// Format the output
-		echo $outparser($result['data'], $fieldsToOutput);
+		echo $outparser($result['data'], $fieldsToOutput,$sql,$params);
 		exit();
 	}	
 ?>

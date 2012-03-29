@@ -2,7 +2,7 @@
 	/*
 	*  HTML
 	*/
-	function pg2HTML($pgresults, $fieldsToOutput)
+	function pg2HTML($pgresults, $fieldsToOutput,$sql)
 	{
 		// Initial HTML tags
 		$htmlout = "<html><head><title>HTML Output</title></head><body>";
@@ -29,10 +29,12 @@
 	/*
 	*  JSON
 	*/
-	function pg2JSON($pgresults, $fieldsToOutput)
+	function pg2JSON($pgresults, $fieldsToOutput,$sql,$params)
 	{ 
 		$pg2jsonresult['results'] = array();
 		$pg2json = array();
+		if(isset($params['callback'])){
+		$callback = $params['callback'];}
 
 		while($row = pg_fetch_array($pgresults))
 		{   
@@ -47,7 +49,11 @@
 		array_push($pg2jsonresult['results'],$pg2json);
 	   
 		header('Content-type: application/json',true);
+		if(isset($callback)){
+			echo $callback . '(' . json_encode($pg2jsonresult) . ')';
+		} else {
 		echo json_encode($pg2jsonresult);
+	}
 	}
 	
 	/*
@@ -139,4 +145,17 @@
 		// header('Content-type: text/html',true);    
 		return $kml;
 	}
+	
+	/*
+	* DEBUG
+	*/
+	function pg2DEBUG($sql,$pgresults,$sql){
+$count = 0; 
+echo $sql."<br/><br/>";
+foreach($pgresults as $row){
+$count = $count+1;
+
+   }
+   echo "total records: ".$count;
+}
 ?>
