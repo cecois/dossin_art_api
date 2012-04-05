@@ -15,7 +15,7 @@
 		}
 		
 		$fieldsToOutput = array("id", "name");
-		produceOutput($outform, $sql, $fieldsToOutput);
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
 	/*
@@ -26,8 +26,33 @@
 		include_once 'lib/wherebuilder.php';
 		include_once 'lib/joinbuilder.php';
 		include_once 'lib/orderbuilder.php';
+
+		switch ($outform) {
+			case 'geojson':
+				$the_geom = 'st_asgeojson(st_transform(the_geom,4326)) the_geom';
+				break;
+
+			case 'json':
+				$the_geom = 'ST_AsEWKT(st_transform(the_geom,4326)) the_geom';
+				break;	
+
+			case 'kml':
+				$the_geom = 'st_askml(st_transform(the_geom,4326)) the_geom';
+				break;	
+
+			default:
+				$the_geom = 'st_astext(st_transform(the_geom,4326)) the_geom';
+				break;
+		}
+
+		$fieldsToOutput = array("ex.id id", "exhib_name","exhib_year","exhib_number",$the_geom);
+
+		$sql = "SELECT ";
+
+		$sql .= implode(',',$fieldsToOutput);
 	
-		$sql = "SELECT * FROM exhibitions";
+		$sql .= " FROM exhibitions ex";
+
 		$params = $_REQUEST;
 		if(count($params) > 0)
 		{
@@ -37,10 +62,11 @@
 			$sql.= $joinclause;
 			$sql.= ' ' . $whereclause;
 			$sql.= $orderclause;
+
 			
 		}
-		$fieldsToOutput = array("id", "exhib_name");
-		produceOutput($outform, $sql, $fieldsToOutput, $params);
+		
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
 	/*
@@ -50,7 +76,7 @@
 	{
 		$sql = "SELECT * FROM works";
 		$fieldsToOutput = array("id", "name", "year", "height", "width", "isdrip", "isguggen");
-		produceOutput($outform, $sql, $fieldsToOutput);
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
 	/*
@@ -60,7 +86,7 @@
 	{
 		$sql = "SELECT * FROM exhibition_spaces";
 		$fieldsToOutput = array("id", "name_raw", "name", "fb_lng", "fb_lat");
-		produceOutput($outform, $sql, $fieldsToOutput);
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
 	/*
@@ -70,7 +96,7 @@
 	{
 		$sql = "SELECT * FROM countries";
 		$fieldsToOutput = array("id", "name");
-		produceOutput($outform, $sql, $fieldsToOutput);
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
 	/*
@@ -98,7 +124,7 @@
 	}
 	
 	
-	function produceOutput($outform, $sql, $fieldsToOutput, $params)
+	function produceOutput($outform, $fieldsToOutput, $sql, $params)
 	{
 		// Global app variable to set a proper header for actual kml clients later
 		global $app;
@@ -114,6 +140,7 @@
 		{	
 			// Set the output parser
 			$outparser = 'pg2' . strtoupper($outform);
+
 
 			// Execute SQL query
 			$pgresults = pg_query($db, $sql);

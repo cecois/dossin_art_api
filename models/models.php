@@ -1,31 +1,5 @@
 <?php
-	/*
-	*  HTML
-	*/
-	function pg2HTML($pgresults, $fieldsToOutput,$sql)
-	{
-		// Initial HTML tags
-		$htmlout = "<html><head><title>HTML Output</title></head><body>";
-		$htmlout .= "<table>";
-		
-		while($row = pg_fetch_array($pgresults))
-		{
-			$htmlout .= "<tr>";
-			for($i=0; $i<count($fieldsToOutput); $i++)
-			{
-				$htmlout .= "<td>" . $row[$fieldsToOutput[$i]] . "</td>";
-			}
-			$htmlout .= "</tr>";
-		}
-		
-		// Closing HTML tags
-		$htmlout .= "</table>";
-		$htmlout .= "</body></html>";
 
-		header('Content-type: text/html',true);
-		echo $htmlout;   
-	}
-	
 	/*
 	*  JSON
 	*/
@@ -59,10 +33,13 @@
 	/*
 	*  GEOJSON
 	*/
-	function pg2GEOJSON($pgresults, $fieldsToOutput)
+	function pg2GEOJSON($pgresults, $fieldsToOutput,$sql,$params)
 	{
 		// Return as GeoJSON
 		$geojson = array('type' => 'FeatureCollection', 'features' => array());
+
+		if(isset($params['callback'])){
+		$callback = $params['callback'];}
 
 		while($row = pg_fetch_array($pgresults))
 		{
@@ -75,13 +52,13 @@
 					'properties' => array('code' => '4326')
 				),
 				'properties' => array(
-					'gid' => $row[0],
-					'fename'=>$row[1],
-					'2'=>$row[2],
-					'3'=>$row[3],
-					'4'=>$row[4],
-					'5'=>$row[5],
-					'6'=>$row[6],
+					'id' => $row['id'],
+					'exhib_name'=>$row['exhib_name'],
+					// '2'=>$row[2],
+					// '3'=>$row[3],
+					// '4'=>$row[4],
+					// '5'=>$row[5],
+					// '6'=>$row[6],
 				)
 			);
 
@@ -95,8 +72,12 @@
 			array_push($geojson['features'], $feature);
 			
 		}
-		header('Content-type: application/json',true);	 
-		return json_encode($geojson);
+		header('Content-type: application/json',true);
+		if(isset($callback)){
+
+		echo $callback . '(' . json_encode($geojson) . ')';	 
+		
+		} else {return json_encode($geojson);}
 	}
 	
 	/*
@@ -111,16 +92,15 @@
 		<Document>';
 
 		while($row = pg_fetch_array($pgresults))
+
 		{
 		  $tstamp=$row['exhib_year'];
 		  $descrip=$row['exhib_name'];
 		  html_entity_decode($descrip);
-		  $rid=$row['exhib_number'];
+		  $rid=$row['id'];
 		  $name=$row['exhib_name'];
 		  html_entity_decode($name);
 		  
-
-
 			$kml .= '
 			  <Placemark id="'.$rid.'">';
 
@@ -138,10 +118,9 @@
 
 
 		}
-
 		$kml .= '</Document></kml>';
-		header('Content-type: application/vnd.google-earth.kml+xml',true);
-		// header('Content-type: application/xml',true);	 
+		// header('Content-type: application/vnd.google-earth.kml+xml',true);
+		header('Content-type: application/xml',true);	 
 		// header('Content-type: text/html',true);    
 		return $kml;
 	}
@@ -149,10 +128,11 @@
 	/*
 	* DEBUG
 	*/
-	function pg2DEBUG($sql,$pgresults,$sql){
+	function pg2DEBUG($pgresults, $fieldsToOutput, $sql){
 $count = 0; 
 echo $sql."<br/><br/>";
-foreach($pgresults as $row){
+while($row = pg_fetch_array($pgresults))
+		{
 $count = $count+1;
 
    }
