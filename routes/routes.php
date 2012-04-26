@@ -1,4 +1,40 @@
 <?php
+
+
+	/*
+	* Get exhibition filters
+	*/
+
+	function getFilters($entity,$outform)
+	{
+		include_once 'lib/orderbuilder.php';
+		
+		
+		
+		$sql="SELECT attname,col_description(attrelid,attnum) as desc,
+    pg_catalog.format_type(pg_attribute.atttypid, pg_attribute.atttypmod) as type 
+    FROM pg_attribute, pg_class WHERE pg_class.oid = attrelid AND attnum>0 
+    AND relname = '".$entity."' AND not col_description(attrelid,attnum) IS NULL AND pg_attribute.attrelid = (
+        SELECT c.oid
+        FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE c.relname ~ '^(".$entity.")$'
+            AND pg_catalog.pg_table_is_visible(c.oid)
+    );";
+
+
+
+		$params = $_REQUEST;
+		if(count($params) > 0)
+		{
+			$orderclause = buildOrder($params);
+			$sql.= $orderclause;
+		}
+		
+		$fieldsToOutput = array("attname", "desc","type");
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
+	}
+
 	/*
 	*  Get Artists
 	*/

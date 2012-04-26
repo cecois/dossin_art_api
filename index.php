@@ -36,8 +36,10 @@ $app->get('/dbfields/:outform','getFields');
 	//  Countries
 	$app->get('/countries/:outform', 'getCountries');
 
-	//  Fields
-	$app->get('/dbfields/:outform','getFields');
+	//  Fields and Filters
+	$app->get('/valids/:entity/:outform','getValids');
+	$app->get('/filters/:entity/:outform','getFilters');
+
  
 //GET route
 $app->get('/', 'describeAPI');
