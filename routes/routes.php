@@ -81,7 +81,7 @@
 				break;
 		}
 
-		$fieldsToOutput = array("ex.id id", "exhib_name","exhib_year","exhib_number",$the_geom);
+		$fieldsToOutput = array("ex.id id", "exhib_name","exhib_year","exhib_number",$the_geom,"countries.name");
 
 		$sql = "SELECT ";
 
@@ -112,6 +112,7 @@
 	{
 		$sql = "SELECT * FROM works";
 		$fieldsToOutput = array("id", "name", "year", "height", "width", "isdrip", "isguggen");
+		$params = $_REQUEST;
 		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
@@ -122,6 +123,7 @@
 	{
 		$sql = "SELECT * FROM exhibition_spaces";
 		$fieldsToOutput = array("id", "name_raw", "name", "fb_lng", "fb_lat");
+		$params = $_REQUEST;
 		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	
@@ -132,6 +134,7 @@
 	{
 		$sql = "SELECT * FROM countries";
 		$fieldsToOutput = array("id", "name");
+		$params = $_REQUEST;
 		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 	

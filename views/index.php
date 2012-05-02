@@ -255,6 +255,8 @@ console.log(results);
 $('#filters > ul').append(items.join(''));
 
 var nonstandardfilters = '<li>polylimit (<a href="http://en.wikipedia.org/wiki/Well-known_text">WKT-formatted</a> polygon)<div class="anno">only exhibitions located <em>within</em> the supplied polygon will be returned -- the string MUST be url encoded and should only include the coordinate pairs (not the "POLYGON((…" part nor the closing parentheses. As with WKT, the polygon should be closed off such that the last coordinate pair is the same as the first.</div> </li>';
+nonstandardfilters += '<li>artistid (integer)<div class="anno">this will be a comma-delimited list of id values for artists -- in this first go we\'re only ORing these together, but soon enough we will need to start supporting a more robust boolean input</div></li>';   
+nonstandardfilters += '<li>countryid (integer)<div class="anno">this will be a comma-delimited list of id values for countries -- in this first go we\'re only ORing these together, but soon enough we will need to start supporting a more robust boolean input</div></li>';
 
 $('#filters > ul').append(nonstandardfilters);
 
