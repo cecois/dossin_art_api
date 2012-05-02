@@ -2,7 +2,7 @@
 function buildWhere($paramarray) {
     $whereArr = array();
     // to prevent injection during what we'll do next, we need to limit valid keys
-    $acceptedIncomingVars = array('exhib_number', 'year_start', 'year_end', 'realism', 'surrealism', 'abstractexpress', 'postexpress', 'neodada', 'popart', 'minimal', 'conceptualart', 'ismuseum', 'onlyus', 'exhib_from_us','artistid','polylimit','isdrip','isguggen','workid');
+    $acceptedIncomingVars = array('exhib_number', 'year_start', 'year_end', 'realism', 'surrealism', 'abstractexpress', 'postexpress', 'neodada', 'popart', 'minimal', 'conceptualart', 'ismuseum', 'onlyus', 'exhib_from_us','artistid','polylimit','isdrip','isguggen','workid','countryid');
 
     // loop through request as array
     foreach ($paramarray as $key => $value) {
@@ -16,6 +16,7 @@ function buildWhere($paramarray) {
     }
 
     if (isset($artistid)){
+        $artistid = booleanIze($artistid,"artists.id");
     array_push($whereArr,"artists.id=" . $artistid);
         }
     if (isset($exhib_number)) {
@@ -54,6 +55,10 @@ function buildWhere($paramarray) {
     if (isset($isguggen)) {
         array_push($whereArr, "isguggen=" . $isguggen);
     }
+    if (isset($countryid)) {
+        $countryid = booleanIze($countryid,"countries.id");
+        array_push($whereArr, "countries.id=" . $countryid);
+    }
     if (isset($workid)) {
         array_push($whereArr, "works.id=" . $workid);
     }
@@ -75,6 +80,10 @@ function buildWhere($paramarray) {
 // function checkOr($value){
 // return str_replace("+or+", " OR ", $value);
 // }
+function booleanIze($paramstring,$field){
+$paramstring = str_replace(",", " OR ".$field."=",$paramstring);
+return $paramstring;
+}
 function wktFromEscaped($wktparam){
 $wktguts = urldecode($wktparam);
 //only poly for now
