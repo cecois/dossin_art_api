@@ -234,7 +234,7 @@ year_start=1946&year_end=1969&abstractexpress=1&realism=0\
    <script type="text/javascript" language="Javascript">
 
 
-$.getJSON('http://localhost/altartlas_api/filters/exhibitions/json', function(data) {
+$.getJSON('http://geodev.lib.purdue.edu/dossin/api/filters/exhibitions/json?callback=?', function(data) {
 
   var items = [];
 
