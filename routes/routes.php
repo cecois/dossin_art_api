@@ -104,6 +104,57 @@
 		
 		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
+
+	/*
+	*  Get Artist Works
+	*/
+	function getArtistWorks($artistid,$outform) {
+		include_once 'lib/wherebuilder.php';
+		include_once 'lib/joinbuilder.php';
+		include_once 'lib/orderbuilder.php';
+
+		switch ($outform) {
+			case 'geojson':
+				$the_geom = 'st_asgeojson(st_transform(the_geom,4326)) the_geom';
+				break;
+
+			case 'json':
+				$the_geom = 'ST_AsEWKT(st_transform(the_geom,4326)) the_geom';
+				break;	
+
+			case 'kml':
+				$the_geom = 'st_askml(st_transform(the_geom,4326)) the_geom';
+				break;	
+
+			default:
+				$the_geom = 'st_astext(st_transform(the_geom,4326)) the_geom';
+				break;
+		}
+
+		$fieldsToOutput = array("ex.id id", "exhib_name","exhib_year","exhib_number",$the_geom,"countries.name","isdrip");
+
+		$sql = "SELECT ";
+
+		$sql .= implode(',',$fieldsToOutput);
+	
+		$sql .= " FROM exhibitions ex";
+
+		$params = $_REQUEST;
+		$params["artistid"] = $artistid;
+		if(count($params) > 0)
+		{
+			$joinclause = buildJoinForExhibitions($params);
+			$whereclause = buildWhere($params);
+			$orderclause = buildOrder($params);
+			$sql.= $joinclause;
+			$sql.= ' ' . $whereclause;
+			$sql.= $orderclause;
+
+			
+		}
+		
+		produceOutput($outform, $fieldsToOutput, $sql, $params);
+	}
 	
 	/*
 	*  Get Works

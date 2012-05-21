@@ -5,7 +5,7 @@ function buildJoinForExhibitions($paramarray) {
 $joinclau = '';
 
     // to prevent injection during what we'll do next, we need to limit valid keys
-    $acceptedIncomingVars = array('artistid','artistname');
+    $acceptedIncomingVars = array('artistid','artistname','isdrip');
     // loop through request as array
     foreach ($paramarray as $key => $value) {
         // lowercase it
@@ -16,9 +16,14 @@ $joinclau = '';
             $$key = $value;
         }
     }
-    if (isset($artistid)){
-    $joinclau .= " join exhibitions_has_artists exa on exa.fk_exhibitions_id=ex.id join artists on exa.fk_artists_id=artists.id ";
-        }
+    // if (isset($artistid)){
+    // $joinclau .= " join exhibitions_has_artists exa on exa.fk_exhibitions_id=ex.id join artists on exa.fk_artists_id=artists.id ";
+    //     }
+
+if (isset($artistid)){
+    $joinclau .= " left JOIN exhibitions_has_works exw ON exw.fk_exhibitions_id = ex. ID
+right JOIN works ON exw.fk_works_id = works. ID join artists on works.fk_artists_id=artists.id";
+        }        
 
     $joinclau .= " join exhibition_spaces on ex.fk_exhibition_spaces_id=exhibition_spaces.id join cities on exhibition_spaces.fk_cities_id=cities.id join countries on cities.fk_countries_id=countries.id ";
         //get all of the parameters in the POST/GET request"    
