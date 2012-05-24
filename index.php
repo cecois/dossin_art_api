@@ -9,6 +9,16 @@ function debugMe(){
 echo "debugged?";
 }
 
+function describeAPI(){
+$content = file_get_contents('views/index.php');
+echo $content;
+}
+
+function presentAdmin(){
+$content = file_get_contents('views/admin.php');
+echo $content;
+}
+
 require_once 'routes/routes.php';
 require_once 'lib/db.php';
 require_once 'routes/describeapi.php';
@@ -43,4 +53,5 @@ $app->get('/dbfields/:outform','getFields');
  
 //GET route
 $app->get('/', 'describeAPI');
+$app->get('/admin','presentAdmin');
 $app->run();
