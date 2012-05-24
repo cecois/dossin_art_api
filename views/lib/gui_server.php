@@ -46,7 +46,7 @@
 	/* Get Data */
 	/* Simply SELECT data from the provided table and column */
 	function getData($table, $column) {
-		require '../../lib/db.php';
+		require 'lib/db_admin.php';
 		try {
 			$sql = "SELECT " . $column . " FROM " . $table;
 			$pgresults = pg_query($db, $sql);
@@ -114,7 +114,7 @@
 	/* Get ALL Data */
 	/* This is a function that attempts to create an array of ALL of the data in the database. Takes time, but made portions of the javascript easier. */
 	function allData() {
-		require '../../lib/db.php';
+		require 'lib/db_admin.php';
 		$data;
 		
 		// Exhibitions Data

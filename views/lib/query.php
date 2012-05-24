@@ -1,5 +1,5 @@
 <?php
-	require '../../lib/db.php';
+	require 'lib/db_admin.php';
 	$sql = $_GET["q"];
 	echo $sql . "</br>";
 	try {
