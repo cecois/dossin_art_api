@@ -21,8 +21,7 @@ $joinclau = '';
     //     }
 
 if (isset($artistid)){
-    $joinclau .= " left JOIN exhibitions_has_works exw ON exw.fk_exhibitions_id = ex. ID
-right JOIN works ON exw.fk_works_id = works. ID join artists on works.fk_artists_id=artists.id";
+    $joinclau .= " right join exhibitions_has_artists exa on ex.id=ex.fk_exhibitions_id join artists on exa.fk_artists_id=artists.id ";
         }        
 
     $joinclau .= " join exhibition_spaces on ex.fk_exhibition_spaces_id=exhibition_spaces.id join cities on exhibition_spaces.fk_cities_id=cities.id join countries on cities.fk_countries_id=countries.id ";
