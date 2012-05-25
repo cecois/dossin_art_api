@@ -89,6 +89,7 @@
 	
 		$sql .= " FROM exhibitions ex";
 
+
 		$params = $_REQUEST;
 		if(count($params) > 0)
 		{
@@ -101,7 +102,6 @@
 
 			
 		}
-		
 		produceOutput($outform, $fieldsToOutput, $sql, $params);
 	}
 
